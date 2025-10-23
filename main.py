@@ -24,6 +24,9 @@ if __name__ == "__main__":
     # Initialize array to aggregate confusion matrices
     total_confusion_matrix = np.zeros((len(np.unique(dataset[:, -1])), len(np.unique(dataset[:, -1]))))
 
+    # Store average max_depth across folds
+    cumulative_max_depth = 0
+
     # Train decision tree and evaluate on each fold
     print(f"Training and running simple CV on trees without pruning for {K} folds, please wait...")
     for k, train_test_fold in enumerate(train_test_k_folds):
@@ -31,11 +34,13 @@ if __name__ == "__main__":
         decision_tree, max_depth = decision_tree_learning(train_dataset)
         confusion_matrix = evaluate(test_dataset, decision_tree)
         total_confusion_matrix += confusion_matrix
+        cumulative_max_depth += max_depth
 
     # Compute average confusion matrix. Then, compute metrics from confusion matrix
     average_confusion_matrix = total_confusion_matrix / K
     accuracy, recall, precision_rate, f1 = generate_classification_metrics(average_confusion_matrix)
     print(f"\nAverage metrics for tree (without pruning)")
+    print(f"Average max depth across folds: {cumulative_max_depth / K}")
     print(f"Accuracy: {accuracy}%")
     print(f"Recall per class: {recall}")
     print(f"Precision rate per class: {precision_rate}")
@@ -57,6 +62,10 @@ if __name__ == "__main__":
 
     # Train and prune decision tree. Then evaluate on test dataset
     nested_cv_accuracies = []
+    nested_cv_confusion_matrix = np.zeros((len(np.unique(dataset[:, -1])), len(np.unique(dataset[:, -1]))))
+    
+    # Store average max_depth across folds
+    nested_cv_cumulative_max_depth = 0
 
     print(f"Training, pruning and running nested CV on trees for {K*(K-1)} folds, please wait...")
     for train_test_val_fold in train_test_val_folds:
@@ -68,11 +77,28 @@ if __name__ == "__main__":
 
             pruned_tree = prune_n_parses(decision_tree, train_dataset, val_dataset)
             y_prediction = predict(pruned_tree, test_dataset)
+
             accuracy = compute_accuracy(test_dataset[:, -1], y_prediction)
             nested_cv_accuracies.append(accuracy)
 
+            confusion_matrix = evaluate(test_dataset, pruned_tree)
+            nested_cv_confusion_matrix += confusion_matrix
+
+            nested_cv_cumulative_max_depth += max_depth
+
+
     # Compute average accuracy across all nested CV folds
     nested_cv_average_accuracy = sum(nested_cv_accuracies)/len(nested_cv_accuracies)
-
     print(f"\nAverage accuracy after pruning with nested CV: {nested_cv_average_accuracy*100:.2f}%")
+
+    # Compute average confusion matrix. Then, compute metrics from confusion matrix
+    nested_cv_average_confusion_matrix = nested_cv_confusion_matrix / (K*(K-1))
+    nested_cv_accuracy, nested_cv_recall, nested_cv_precision_rate, nested_cv_f1 = generate_classification_metrics(nested_cv_average_confusion_matrix)
+    print(f"\nAverage metrics for tree (after pruning)")
+    print(f"Average max depth across folds: {nested_cv_cumulative_max_depth / (K*(K-1))}")
+    print(f"Accuracy: {nested_cv_accuracy:.2f}%")
+    print(f"Recall per class: {nested_cv_recall}")
+    print(f"Precision rate per class: {nested_cv_precision_rate}")
+    print(f"F1 score per class: {nested_cv_f1}")
+    print(f"Average confusion matrix:\n{nested_cv_average_confusion_matrix}")
 
