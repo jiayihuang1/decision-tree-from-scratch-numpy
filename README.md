@@ -62,3 +62,11 @@ Outputs:
 
 - Average accuracy, recall, precision, F1 (from the average confusion matrix)
 - Path to the saved tree plot, e.g. `wifi_db/clean_dataset_tree.png`
+
+
+## Contributors
+
+- Ethan Chia
+- Benjamin Ang
+- Cataline Tan
+- Jia Yi Huang
