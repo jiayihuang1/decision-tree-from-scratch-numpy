@@ -66,7 +66,7 @@ Outputs:
 
 ## Contributors
 
-- Ethan Chia
+- Ethan Chia Wei Fong
 - Benjamin Ang
 - Cataline Tan
 - Jia Yi Huang
