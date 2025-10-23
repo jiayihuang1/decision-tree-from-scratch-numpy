@@ -1,4 +1,4 @@
-## Decision Tree from Scratch (NumPy)
+## Continuous Decision Tree from Scratch (NumPy)
 
 Builds a decision tree classifier from scratch using NumPy only, trains/evaluates it with cross-validation, optionally prunes it with nested CV, and visualizes the learned tree with Matplotlib. The datasets are simple whitespace-separated text files.
 
