@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def compute_confusion_matrix(y_true, y_prediction, class_labels=None):
     """Compute the confusion matrix
 
@@ -9,8 +10,8 @@ def compute_confusion_matrix(y_true, y_prediction, class_labels=None):
         class_labels (np.ndarray): Array of unique class labels. Defaults to the union of y_true and y_prediction
 
     Returns:
-        np.ndarray : Shape (C, C), where C is the number of classes.
-                    Rows are ground truth per class, columns are predictions
+        confusion (np.ndarray) : Shape (C, C), where C is the number of classes.
+                            Rows are ground truth per class, columns are predictions
     """
 
     # If no class_labels given, obtain set of unique class labels from union of ground truth and prediction
@@ -55,7 +56,7 @@ def compute_accuracy(y_true, y_prediction):
         return np.sum(y_true == y_prediction) / len(y_true)
     except ZeroDivisionError:
         return 0.
-    
+
 
 def predict(decision_tree, x_test):
     """Predict class label for given instance using decision tree
@@ -67,7 +68,7 @@ def predict(decision_tree, x_test):
     Returns:
         y_prediction (np.ndarray): Array of predicted class labels
     """
-    
+
     y_prediction = np.zeros((x_test.shape[0],), dtype=int)
 
     for i in range(x_test.shape[0]):
@@ -121,7 +122,7 @@ def generate_classification_metrics(confusion_matrix):
     all_recall = []
     all_precision_rate = []
     all_f1 = []
-    
+
     # Compute metrics per class
     for c in range(len(confusion_matrix)):
         TP = confusion_matrix[c, c]

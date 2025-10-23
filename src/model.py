@@ -11,7 +11,7 @@ def compute_entropy(dataset):
         dataset (np.ndarray): The input dataset
 
     Returns:
-        float: The computed entropy
+        entropy (float): The computed entropy
     """
 
     unique_labels, counts = np.unique(dataset[:, -1], return_counts=True)
@@ -30,7 +30,7 @@ def compute_information_gain(dataset, attribute, value):
         value (float): The value to split the attribute on
 
     Returns:
-        float: The computed information gain
+        information_gain (float): The computed information gain
     """
 
     # Split the dataset by the attribute and value
@@ -48,12 +48,17 @@ def compute_information_gain(dataset, attribute, value):
 def decision_tree_learning(dataset, current_depth=0):
     """Recursively train a decision tree given an input dataset
 
+    The recursive function takes in the subset of data and current depth of the node and returns the 'filled'
+    node to the decision tree that is being trained and the function is called again for the children nodes
+    (if any) until a leaf node is reached.
+
     Args:
         dataset (np.ndarray): The input dataset
         current_depth (int): The current depth of the tree
 
     Returns:
-        dict: The trained decision tree
+        node (dict): The trained decision tree
+        int : The max depth of the trained decision tree
     """
 
     # Leaf node: all data points are pure (i.e., same class label)
@@ -69,7 +74,7 @@ def decision_tree_learning(dataset, current_depth=0):
         # Edge case: Information gain is zero, no further splits possible
         optimal_attribute, optimal_value = find_split(dataset)
         if optimal_attribute is None or optimal_value is None:
-            
+
             leaf_node = {
                 'prediction': majority_class(dataset),
                 'depth': current_depth,
@@ -105,7 +110,8 @@ def find_split(dataset):
         dataset (np.ndarray): The input dataset
 
     Returns:
-        (int, float): Tuple of optimal attribute and value for splitting
+        optimal_attribute (int): The index of the optimal attribute to split on
+        optimal_value (float): The optimal value to split the optimal attribute on
     """
 
     highest_IG = 0
@@ -132,7 +138,7 @@ def majority_class(current_dataset):
         current_dataset (np.ndarray): The input dataset
 
     Returns:
-        int: The majority class label
+        int : The majority class label
     """
 
     unique_labels, counts = np.unique(current_dataset[:, -1], return_counts=True)
@@ -142,7 +148,7 @@ def majority_class(current_dataset):
 
 def prune_n_parses(root_node, current_data_subset, validation_data):
     """Fires recursive 'prune' function and checks if further pruning is required.
-    Reverts to previous tree state if pruning does not improve validation accuracy.
+    Reverts to previous tree state if pruning decreases validation accuracy.
 
     Args:
         root_node (dict): Dictionary of the decision tree
@@ -150,7 +156,7 @@ def prune_n_parses(root_node, current_data_subset, validation_data):
         validation_data (np.ndarray): The validation dataset
 
     Returns:
-        np.ndarray: The pruned decision tree
+        pruned_tree (dict): The pruned decision tree
     """
 
     pruned_tree = root_node
@@ -203,7 +209,7 @@ def prune(root_node, current_node, current_data_subset, validation_data):
         validation_data (np.ndarray): The validation dataset
 
     Returns:
-        dict: The pruned decision tree
+        root_node (dict): The pruned decision tree
     """
 
     # Stop recursion if the current_node is a leaf
