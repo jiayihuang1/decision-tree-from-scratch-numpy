@@ -1,6 +1,6 @@
 ## Continuous Decision Tree from Scratch (NumPy)
 
-Builds a decision tree classifier from scratch using NumPy only, trains/evaluates it with cross-validation, optionally prunes it with nested CV, and visualizes the learned tree with Matplotlib. The datasets are simple whitespace-separated text files.
+Builds a decision tree classifier from scratch using NumPy only, trains/evaluates it with cross-validation, optionally prunes it with nested CV, and visualises the learned tree with Matplotlib. The datasets are simple whitespace-separated text files.
 
 ## Highlights
 
@@ -8,13 +8,13 @@ Builds a decision tree classifier from scratch using NumPy only, trains/evaluate
 - Information gain (entropy) splits, using the median value per feature
 - Stratified K-fold cross-validation for evaluation
 - Optional pruning via nested cross-validation
-- Tree visualization saved as a PNG
+- Tree visualisation saved as a PNG
 
 ## Project structure
 
 ```
 intro-to-ml-cw1/
-├── main.py                      # Entry point: trains, evaluates, visualizes
+├── main.py                      # Entry point: trains, evaluates, visualises
 ├── requirements.txt             # Python dependencies
 ├── src/
 │   ├── dataset.py              # Loading dataset and stratified k-fold split
@@ -55,7 +55,7 @@ What it does:
 
 1. Loads the dataset as a NumPy array
 2. Performs stratified K-fold (K=10) cross-validation without pruning and reports average metrics
-3. Trains one tree (from the last fold in the loop) and saves a visualization PNG next to the dataset
+3. Trains one tree (from the last fold in the loop) and saves a visualisation PNG next to the dataset
 4. Runs nested CV to prune the tree and reports average accuracy after pruning
 
 Outputs:
