@@ -130,25 +130,3 @@ def plot_tree(node, x=None, y=1.0, dy=None, ax=None, depth=0, max_vis_depth=None
             plot_tree(node[child], child_x, child_y, dy, ax, depth + 1, max_vis_depth, stop_depth, leaf_positions)
 
     return ax
-
-# --- Build and visualize the tree ---
-if __name__ == "__main__":
-    import sys
-    sys.path.append('.')  # Ensure we can import from current directory
-    from main import load_dataset, train_test_split, decision_tree_learning
-    
-    # Load data and build tree
-    x, y = load_dataset("wifi_db/clean_dataset.txt")
-    x_train, x_test, y_train, y_test = train_test_split(x, y, 0.2)
-    
-    # Build the decision tree
-    tree, depth = decision_tree_learning(x_train, y_train)
-    
-    print(f"Tree built successfully with depth: {depth}")
-    
-    # Generate plot
-    ax = plot_tree(tree)
-    plt.tight_layout()
-    plt.savefig("big_tree.png", dpi=300, bbox_inches='tight')
-    print("Tree visualization saved as 'big_tree.png'")
-    plt.close()
