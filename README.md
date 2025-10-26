@@ -55,7 +55,7 @@ What it does:
 
 1. Loads the dataset as a NumPy array
 2. Performs stratified K-fold (K=10) cross-validation without pruning and reports average metrics
-3. Trains one tree (from the last fold in the loop) and saves a visualisation PNG next to the dataset
+3. Computes the visualisation of one trained tree (from the last fold in the loop) and saves the output as a PNG next to the dataset
 4. Runs nested CV to prune the tree and reports average accuracy after pruning
 
 Outputs:
@@ -68,5 +68,5 @@ Outputs:
 
 - Ethan Chia Wei Fong
 - Benjamin Ang
-- Cataline Tan
+- Catalina Tan
 - Jia Yi Huang
