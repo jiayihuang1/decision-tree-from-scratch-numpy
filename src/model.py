@@ -104,7 +104,7 @@ def decision_tree_learning(dataset, current_depth=0):
 
 
 def find_split(dataset):
-    """Compute optimal attribute to split dataset on based on max information gain
+    """Compute optimal attribute and value to split dataset on based on max information gain
 
     Args:
         dataset (np.ndarray): The input dataset
@@ -164,12 +164,12 @@ def prune_n_parses(root_node, current_data_subset, validation_data):
     prune_flag = True  # To control the pruning loop
     n_parses = 0  # Total number of times the 'prune' function has been called
 
-    # Calculate the starting accuracy on the VALIDATION SET
+    # Calculate the starting accuracy on the validation dataset
     y_true = validation_data[:, -1]
     y_prediction_before = predict(pruned_tree, validation_data)
     best_accuracy = compute_accuracy(y_true, y_prediction_before)
 
-    while prune_flag:
+    while prune_flag: # Loop until pruning stops improving accuracy on validation dataset
 
         n_parses += 1
 
@@ -179,7 +179,7 @@ def prune_n_parses(root_node, current_data_subset, validation_data):
         # Perform one full pass of pruning over the tree
         pruned_tree = prune(pruned_tree, pruned_tree, current_data_subset, validation_data)
 
-        # Calculate accuracy on the VALIDATION SET AFTER pruning pass
+        # Calculate accuracy on the validation dataset AFTER pruning pass
         y_prediction_after = predict(pruned_tree, validation_data)
         accuracy_after = compute_accuracy(y_true, y_prediction_after)
 
@@ -256,7 +256,7 @@ def prune(root_node, current_node, current_data_subset, validation_data):
         left_data_subset = current_data_subset[current_data_subset[:, current_attribute] <= current_value]
         right_data_subset = current_data_subset[current_data_subset[:, current_attribute] > current_value]
 
-        # Recursively calls the prune function for children nodes
+        # Recursively call the prune function for children nodes
         prune(root_node, left_node, left_data_subset, validation_data)
         prune(root_node, right_node, right_data_subset, validation_data)
 
