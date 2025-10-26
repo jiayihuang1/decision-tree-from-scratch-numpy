@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-# --- Utility functions ---
+
 def max_depth(node):
     """Returns the maximum depth of the tree
 
@@ -15,6 +15,7 @@ def max_depth(node):
         return 1
     
     return 1 + max(max_depth(node.get("left")), max_depth(node.get("right")))
+
 
 def count_leaves(node):
     """Count the number of leaf nodes in the tree
@@ -33,7 +34,7 @@ def count_leaves(node):
     
     return count_leaves(node.get("left")) + count_leaves(node.get("right"))
 
-# --- Assign x positions to leaves first ---
+
 def assign_x_positions(node, x_start=0, leaf_positions=None):
     """Traverse the tree and assign x-coordinates to all nodes.
     Leaf nodes get consecutive integers; internal nodes are centered above their children.
@@ -60,7 +61,7 @@ def assign_x_positions(node, x_start=0, leaf_positions=None):
     leaf_positions[id(node)] = (leaf_positions[id(node["left"])] + leaf_positions[id(node["right"])]) / 2
     return x_right, leaf_positions
 
-# --- Recursive plotting ---
+
 def plot_tree(node, x=None, y=1.0, dy=None, ax=None, depth=0, max_vis_depth=None, stop_depth=4, leaf_positions=None):
     """Recursively plot the tree using matplotlib.
     Each node is drawn as a rectangle, with lines connecting to children.
@@ -95,7 +96,7 @@ def plot_tree(node, x=None, y=1.0, dy=None, ax=None, depth=0, max_vis_depth=None
     if x is None:
         x = leaf_positions[id(node)]
 
-    # --- Determine label and color ---
+    # Determine label and color
     if node.get("leaf", False):
         label = f"Leaf\nRoom {int(node['prediction'])}"
         color = "lightgreen"
@@ -103,7 +104,7 @@ def plot_tree(node, x=None, y=1.0, dy=None, ax=None, depth=0, max_vis_depth=None
         label = f"f{node['attribute']} <= {node['value']:.2f}"
         color = "burlywood"
 
-    # --- Draw rectangle for this node ---
+    # Draw rectangle for this node
     font_size = 25
     box_width = 18  # scaled with font size
     box_height = 0.01   # scaled with font size
@@ -121,7 +122,7 @@ def plot_tree(node, x=None, y=1.0, dy=None, ax=None, depth=0, max_vis_depth=None
     if stop_depth is not None and depth >= stop_depth:
         return ax
     
-    # --- Plot children ---
+    # Plot children
     child_y = y - dy
     for child in ["left", "right"]:
         if node.get(child):
