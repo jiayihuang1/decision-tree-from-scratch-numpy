@@ -97,7 +97,7 @@ def evaluate(test_db, trained_tree):
         trained_tree (dict): Trained decision tree
 
     Returns:
-        np.ndarray : Shape (C, C), where C is the number of classes.
+        np.ndarray : Confusion matrix of shape (C, C), where C is the number of classes.
                     Rows are ground truth per class, columns are predictions
     """
 
