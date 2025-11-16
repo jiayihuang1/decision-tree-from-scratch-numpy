@@ -1,7 +1,6 @@
 ## Continuous Decision Tree from Scratch (NumPy)
 
-Builds a decision tree classifier from scratch using NumPy only, trains/evaluates it with cross-validation, optionally prunes it with nested CV, and visualises the learned tree with Matplotlib. The datasets are simple whitespace-separated text files.
-
+Builds a decision tree classifier from scratch using NumPy only, trains/evaluates it with cross-validation, optionally prunes it with nested CV, and visualises the learned tree with Matplotlib. The datasets are simple whitespace-separated text files on WIFI signal data. Based on continuous signal strength features, the room in which a person is in is identified via multi-class classification.
 ## Highlights
 
 - Pure NumPy implementation of a binary decision tree
@@ -63,6 +62,9 @@ Outputs:
 - Average accuracy, recall, precision, F1 (from the average confusion matrix)
 - Path to the saved tree plot, e.g. `wifi_db/clean_dataset_tree.png`
 
+## Academic Context
+
+This project was developed as coursework for **COMP70050 Introduction to Machine Learning** at Imperial College London, MSc AI program.
 
 ## Contributors
 
